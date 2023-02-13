@@ -38,8 +38,15 @@
 			let y,z;
 			let upper_body=0,lower_body=0;
 			let rotyV=0,rotzV=0;
-			
+			var saveRequested = false;
 			let meshflag=0;
+
+			var strDownloadMime = "image/octet-stream";
+			renderer = new THREE.WebGLRenderer({
+            preserveDrawingBuffer: true
+        });
+			
+			//
 			const vpds = [];
 
 			Ammo().then( function ( AmmoLib ) {
@@ -83,20 +90,12 @@
 					rotzV=rotzV-0.1;
 				}
 			}
-			const fs = require('fs')
+			//const fs = require('fs')
 			if (e.keyCode == 81) {//Q
-    // Data which will write in a file.
-    let data = "Learning how to write in a file."
-      
-    // Write data in 'Output.txt' .
-    fs.writeFile('Output.txt', data, (err) => {
-          
-        // In case of a error throw err.
-        if (err) throw err;
-    })
-}	
+   
+}
 		}
-		body.addEventListener('keydown', goRocket, false) //偵測按下按鍵的行為
+		body.addEventListener('keydown', goRocket, false); //偵測按下按鍵的行為
 				
 			/*function intitMYGUI(){
 				const mygui = new GUI();
@@ -107,14 +106,35 @@
 			}*/
 			
 			function init() {
-
+				
 				const container = document.createElement( 'div' );
 				document.body.appendChild( container );
 
 				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 2000 );
 				camera.position.z = 25;
 				//camera.position.y = 8;
+				//=========================
 
+        /*renderer = new THREE.WebGLRenderer({
+            preserveDrawingBuffer: true
+        });*/
+		var saveLink = document.createElement('div');
+        saveLink.style.position = 'absolute';
+        saveLink.style.top = '10px';
+        saveLink.style.width = '100%';
+        saveLink.style.background = '#FFFFFF';
+        saveLink.style.textAlign = 'center';
+        saveLink.innerHTML =
+            '<a href="#" id="saveLink">Save Frame</a>';
+        document.body.appendChild(saveLink);
+        document.getElementById("saveLink").addEventListener('click', saveAsImage);
+        renderer = new THREE.WebGLRenderer({
+            preserveDrawingBuffer: true
+        });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+				//=========================
 				// scene
 
 				scene = new THREE.Scene();
@@ -364,6 +384,7 @@
 				camera.updateProjectionMatrix();
 
 				effect.setSize( window.innerWidth, window.innerHeight );
+				//renderer.setSize(window.innerWidth, window.innerHeight);
 
 			}
 
@@ -375,7 +396,40 @@
 				render();
 
 			}
+			function saveAsImage() {
+    // say, need to take a snapshot after next frame is rendered
+    saveRequested = true;
+}
 
+function saveAsImage2() {
+    var imgData, imgNode;
+
+    try {
+        var strMime = "image/jpeg";
+        var strDownloadMime = "image/octet-stream";
+
+        let imgData = renderer.domElement.toDataURL(strMime);
+        //console.log(imgData);
+
+        saveFile(imgData.replace(strMime, strDownloadMime), "test.jpg");
+
+    } catch (e) {
+        console.log(e);
+        return;
+    }
+}
+var saveFile = function (strData, filename) {
+        var link = document.createElement('a');
+        if (typeof link.download === 'string') {
+            document.body.appendChild(link); //Firefox requires the link to be in the body
+            link.download = filename;
+            link.href = strData;
+            link.click();
+            document.body.removeChild(link); //remove the link when done
+        } else {
+            location.replace(uri);
+        }
+    }
 			function render() {
 				let actrotvalueY=rotyV*5;
 				let actrotvalueZ=rotzV*5;
@@ -386,10 +440,15 @@
 				mesh.skeleton.bones[lower_body].rotation.z = THREE.MathUtils.degToRad(actrotvalueZ);
 				mesh.skeleton.bones[upper_body].rotation.z = THREE.MathUtils.degToRad(actrotvalueZ);
 				effect.render( scene, camera );
+				if (saveRequested) {
+        		saveAsImage2();
+        		saveRequested = false;
 				}
 				
 
-			}
+			}}
+	
+
 
 		</script>
 
