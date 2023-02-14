@@ -4,3 +4,6 @@ w:Zrotation增加 a:Yrotation減少 s:Zrotation減少 d:Yrotation增加
 ## 儲存
 按下E鍵儲存畫面截圖
 按下Q鍵儲存當前vector
+## TODO
+調整位置
+調整圖片大小
