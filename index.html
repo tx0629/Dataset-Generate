@@ -40,7 +40,7 @@
 			let rotyV=0,rotzV=0;
 			var saveRequested = false;
 			let meshflag=0;
-
+			var array = [0,0];
 			var strDownloadMime = "image/octet-stream";
 			renderer = new THREE.WebGLRenderer({
             preserveDrawingBuffer: true
@@ -68,32 +68,36 @@
 			if (e.keyCode == 65) {//A
 				if(rotyV>-0.9){
 					rotyV=rotyV-0.1;
+
 				}
-				
-				//console.log(rotyV);
+				array[0]=rotyV.toFixed(1);
+				console.log(rotyV);
 			
 			}
 			if (e.keyCode == 68) {//D
 				if(rotyV<0.9){
 					rotyV=rotyV+0.1;
 				}
-				
-				//console.log(rotyV);
+				array[0]=rotyV.toFixed(1);
+				console.log(rotyV);
 			}
 			if (e.keyCode == 87) {//w
 				if(rotzV<0.9){
 					rotzV=rotzV+0.1;
 				}
+				array[1]=rotzV.toFixed(1);
 			}
 			if (e.keyCode == 83) {//s
 				if(rotzV>-0.9){
 					rotzV=rotzV-0.1;
 				}
+				array[1]=rotzV.toFixed(1);
 			}
 			//const fs = require('fs')
 			if (e.keyCode == 81) {//Q
-   
-}
+				saveAstxt();
+
+			}
 		}
 		body.addEventListener('keydown', goRocket, false); //偵測按下按鍵的行為
 				
@@ -118,6 +122,7 @@
         /*renderer = new THREE.WebGLRenderer({
             preserveDrawingBuffer: true
         });*/
+		//=======================
 		var saveLink = document.createElement('div');
         saveLink.style.position = 'absolute';
         saveLink.style.top = '10px';
@@ -128,6 +133,19 @@
             '<a href="#" id="saveLink">Save Frame</a>';
         document.body.appendChild(saveLink);
         document.getElementById("saveLink").addEventListener('click', saveAsImage);
+		//=======================
+		/*var savetxt = document.createElement('div');
+        savetxt.style.position = 'absolute';
+        savetxt.style.top = '10px';
+        savetxt.style.width = '100%';
+        savetxt.style.background = '#FFFFFF';
+        savetxt.style.textAlign = 'left';
+        savetxt.innerHTML =
+            '<a href="#" id="savetxt">Save Frame</a>';
+        document.body.appendChild(savetxt);
+        document.getElementById("savetxt").addEventListener('click', saveAstxt);*/
+
+		//=============================================
         renderer = new THREE.WebGLRenderer({
             preserveDrawingBuffer: true
         });
@@ -396,10 +414,19 @@
 				render();
 
 			}
+			function saveAstxt() {
+			var link = document.createElement("a");
+         var content = array[0]+','+array[1];
+         var file = new Blob([content], { type: 'text/plain' });
+         link.href = URL.createObjectURL(file);
+         link.download = "sample.txt";
+         link.click();
+         URL.revokeObjectURL(link.href);
+				}
 			function saveAsImage() {
-    // say, need to take a snapshot after next frame is rendered
-    saveRequested = true;
-}
+    			// say, need to take a snapshot after next frame is rendered
+    				saveRequested = true;
+			}	
 
 function saveAsImage2() {
     var imgData, imgNode;
