@@ -92,10 +92,15 @@
 					rotzV=rotzV-0.1;
 				}
 				array[1]=rotzV.toFixed(1);
+				
 			}
 			//const fs = require('fs')
 			if (e.keyCode == 81) {//Q
 				saveAstxt();
+
+			}
+			if (e.keyCode == 69) {//E
+				saveAsImage();
 
 			}
 		}
@@ -123,7 +128,7 @@
             preserveDrawingBuffer: true
         });*/
 		//=======================
-		var saveLink = document.createElement('div');
+		/*var saveLink = document.createElement('div');
         saveLink.style.position = 'absolute';
         saveLink.style.top = '10px';
         saveLink.style.width = '100%';
@@ -132,24 +137,15 @@
         saveLink.innerHTML =
             '<a href="#" id="saveLink">Save Frame</a>';
         document.body.appendChild(saveLink);
-        document.getElementById("saveLink").addEventListener('click', saveAsImage);
+        document.getElementById("saveLink").addEventListener('click', saveAsImage);*/
 		//=======================
-		/*var savetxt = document.createElement('div');
-        savetxt.style.position = 'absolute';
-        savetxt.style.top = '10px';
-        savetxt.style.width = '100%';
-        savetxt.style.background = '#FFFFFF';
-        savetxt.style.textAlign = 'left';
-        savetxt.innerHTML =
-            '<a href="#" id="savetxt">Save Frame</a>';
-        document.body.appendChild(savetxt);
-        document.getElementById("savetxt").addEventListener('click', saveAstxt);*/
+		
 
 		//=============================================
         renderer = new THREE.WebGLRenderer({
             preserveDrawingBuffer: true
         });
-        renderer.setSize(window.innerWidth, window.innerHeight);
+        //renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
 
 				//=========================
@@ -168,9 +164,9 @@
 				//scene.add(boxMesh);
 				//
 
-				renderer = new THREE.WebGLRenderer( { antialias: true } );
+				renderer = new THREE.WebGLRenderer( { antialias: true,alpha: true } );
 				renderer.setPixelRatio( window.devicePixelRatio );
-				renderer.setSize( window.innerWidth, window.innerHeight );
+				renderer.setSize(window.innerWidth, window.innerHeight );
 				container.appendChild( renderer.domElement );
 
 				effect = new OutlineEffect( renderer );
@@ -278,7 +274,7 @@
 				//===================================//
 				
 				//===================================//
-				window.addEventListener( 'resize', onWindowResize );
+				//window.addEventListener( 'resize', onWindowResize );
 
 				/*function initGui() {
 
@@ -423,6 +419,7 @@
          link.click();
          URL.revokeObjectURL(link.href);
 				}
+
 			function saveAsImage() {
     			// say, need to take a snapshot after next frame is rendered
     				saveRequested = true;
