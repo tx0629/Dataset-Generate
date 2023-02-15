@@ -38,13 +38,10 @@
 			let y,z;
 			let upper_body=0,lower_body=0;
 			let rotyV=0,rotzV=0;
-			var saveRequested = false;
 			let meshflag=0;
 			var array = [0,0];
 			var strDownloadMime = "image/octet-stream";
-			/*renderer = new THREE.WebGLRenderer({
-            preserveDrawingBuffer: true
-        });*/
+
 			
 			//
 			const vpds = [];
@@ -94,13 +91,13 @@
 				array[1]=rotzV.toFixed(1);
 				
 			}
-			//const fs = require('fs')
+
 			if (e.keyCode == 81) {//Q
 				saveAstxt();
 
 			}
 			if (e.keyCode == 69) {//E
-				//saveAsImage();
+
 				
                 console.log("save");
                 let image = new Image();
@@ -142,28 +139,13 @@
 				//camera.position.y = 8;
 				//=========================
 
-        /*renderer = new THREE.WebGLRenderer({
-            preserveDrawingBuffer: true
-        });*/
-		//=======================
-		/*var saveLink = document.createElement('div');
-        saveLink.style.position = 'absolute';
-        saveLink.style.top = '10px';
-        saveLink.style.width = '100%';
-        saveLink.style.background = '#FFFFFF';
-        saveLink.style.textAlign = 'center';
-        saveLink.innerHTML =
-            '<a href="#" id="saveLink">Save Frame</a>';
-        document.body.appendChild(saveLink);
-        document.getElementById("saveLink").addEventListener('click', saveAsImage);*/
+    
 		//=======================
 		
 
 		//=============================================
       
-        //renderer.setSize(window.innerWidth, window.innerHeight);
-        //document.body.appendChild(renderer.domElement);
-
+ 
 				//=========================
 				// scene
 
@@ -436,40 +418,8 @@
          URL.revokeObjectURL(link.href);
 				}
 
-			function saveAsImage() {
-    			// say, need to take a snapshot after next frame is rendered
-    				saveRequested = true;
-			}	
 
-function saveAsImage2() {
-    var imgData, imgNode;
 
-    try {
-        var strMime = "image/jpeg";
-        var strDownloadMime = "image/octet-stream";
-
-        let imgData = renderer.domElement.toDataURL(strMime);
-        //console.log(imgData);
-
-        saveFile(imgData.replace(strMime, strDownloadMime), "test.jpg");
-
-    } catch (e) {
-        console.log(e);
-        return;
-    }
-}
-var saveFile = function (strData, filename) {
-        var link = document.createElement('a');
-        if (typeof link.download === 'string') {
-            document.body.appendChild(link); //Firefox requires the link to be in the body
-            link.download = filename;
-            link.href = strData;
-            link.click();
-            document.body.removeChild(link); //remove the link when done
-        } else {
-            location.replace(uri);
-        }
-    }
 			function render() {
 				let actrotvalueY=rotyV*5;
 				let actrotvalueZ=rotzV*5;
@@ -481,7 +431,6 @@ var saveFile = function (strData, filename) {
 				mesh.skeleton.bones[upper_body].rotation.z = THREE.MathUtils.degToRad(actrotvalueZ);
 				effect.render( scene, camera );
 				if (saveRequested) {
-        		saveAsImage2();
         		saveRequested = false;
 				}
 				
