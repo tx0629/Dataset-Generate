@@ -21,10 +21,10 @@
 		</div>
 
 		<script src="./js/libs/ammo.wasm.js"></script>
-
+		<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script><!-- $用的 -->
 
 		<script type="module">
-
+		
 			import * as THREE from './build/three.module.js';
 
 			import { GUI } from './jsm/libs/dat.gui.module.js';
@@ -33,7 +33,7 @@
 			import { MMDLoader } from './jsm/loaders/MMDLoader.js';
 			import { MMDAnimationHelper } from './jsm/animation/MMDAnimationHelper.js';
 
-			let camera, scene, renderer, effect;
+			let camera, scene, renderer, effect,frustumSize=30;
 			let mesh, helper;
 			let y,z;
 			let upper_body=0,lower_body=0;
@@ -42,9 +42,9 @@
 			let meshflag=0;
 			var array = [0,0];
 			var strDownloadMime = "image/octet-stream";
-			renderer = new THREE.WebGLRenderer({
+			/*renderer = new THREE.WebGLRenderer({
             preserveDrawingBuffer: true
-        });
+        });*/
 			
 			//
 			const vpds = [];
@@ -100,10 +100,27 @@
 
 			}
 			if (e.keyCode == 69) {//E
-				saveAsImage();
+				//saveAsImage();
+				
+                console.log("save");
+                let image = new Image();
+                renderer.render(scene, camera);//renderer为three.js里的渲染器，scene为场景 camera为相机
+
+                let imgData = renderer.domElement.toDataURL("image/png");//这里可以选择png格式jpeg格式
+                downloadImage(imgData);
+                // image.src = imgData;
+                // document.body.appendChild(image);//这样就可以查看截出来的图片了
+
+            
+        }
+        
 
 			}
-		}
+			function downloadImage(imgUrl) {
+            let a = $("<a></a>").attr("href", imgUrl).attr("download", "img.png").appendTo("body");
+            a[0].click();
+            a.remove();
+        }
 		body.addEventListener('keydown', goRocket, false); //偵測按下按鍵的行為
 				
 			/*function intitMYGUI(){
@@ -118,8 +135,9 @@
 				
 				const container = document.createElement( 'div' );
 				document.body.appendChild( container );
-
-				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 2000 );
+				let aspect = 256 / 256;
+				camera = new THREE.OrthographicCamera(frustumSize * aspect / - 2, frustumSize * aspect / 2, frustumSize / 2, frustumSize / - 2, 0.1, 1000);
+				//camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 2000 );
 				camera.position.z = 25;
 				//camera.position.y = 8;
 				//=========================
@@ -142,11 +160,9 @@
 		
 
 		//=============================================
-        renderer = new THREE.WebGLRenderer({
-            preserveDrawingBuffer: true
-        });
+      
         //renderer.setSize(window.innerWidth, window.innerHeight);
-        document.body.appendChild(renderer.domElement);
+        //document.body.appendChild(renderer.domElement);
 
 				//=========================
 				// scene
@@ -166,7 +182,7 @@
 
 				renderer = new THREE.WebGLRenderer( { antialias: true,alpha: true } );
 				renderer.setPixelRatio( window.devicePixelRatio );
-				renderer.setSize(window.innerWidth, window.innerHeight );
+				renderer.setSize(512, 512);
 				container.appendChild( renderer.domElement );
 
 				effect = new OutlineEffect( renderer );
