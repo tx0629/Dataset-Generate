@@ -94,31 +94,58 @@
 
 			if (e.keyCode == 81) {//Q
 				saveAstxt();
-
+				
 			}
 			if (e.keyCode == 69) {//E
 
 				
                 console.log("save");
-                let image = new Image();
+				saveImage();
+        }
+		
+        if (e.keyCode == 84) {//T
+			//自動儲存圖像與txt
+			//roty 0 to 1
+			autoshot();
+		}
+
+			}
+			function saveImage(){
+				let image = new Image();
                 renderer.render(scene, camera);//renderer为three.js里的渲染器，scene为场景 camera为相机
 
                 let imgData = renderer.domElement.toDataURL("image/png");//这里可以选择png格式jpeg格式
                 downloadImage(imgData);
                 // image.src = imgData;
-                // document.body.appendChild(image);//这样就可以查看截出来的图片了
-
-            
-        }
-        
-
+                // document.body.appendChild(image);//这样就可以查看截出来的图片了    
 			}
 			function downloadImage(imgUrl) {
-            let a = $("<a></a>").attr("href", imgUrl).attr("download", "img.png").appendTo("body");
+            let a = $("<a></a>").attr("href", imgUrl).attr("download", "data1_y.png").appendTo("body");
             a[0].click();
             a.remove();
         }
 		body.addEventListener('keydown', goRocket, false); //偵測按下按鍵的行為
+		function autoshot(){
+			//var i;
+			if(rotyV==0){
+			saveImage();
+			saveAstxt();
+			}
+			
+				if(rotyV<0.9){
+					setTimeout(function()
+   					{
+        				rotyV=rotyV+0.1;
+						console.log(rotyV)
+						array[0]=rotyV.toFixed(1);
+						saveImage();
+						saveAstxt();
+						autoshot();
+    				},1000);
+					
+				}
+				
+			}
 				
 			/*function intitMYGUI(){
 				const mygui = new GUI();
@@ -408,18 +435,6 @@
 				render();
 
 			}
-			function saveAstxt() {
-			var link = document.createElement("a");
-         var content = array[0]+','+array[1];
-         var file = new Blob([content], { type: 'text/plain' });
-         link.href = URL.createObjectURL(file);
-         link.download = "sample.txt";
-         link.click();
-         URL.revokeObjectURL(link.href);
-				}
-
-
-
 			function render() {
 				let actrotvalueY=rotyV*5;
 				let actrotvalueZ=rotzV*5;
@@ -430,14 +445,21 @@
 				mesh.skeleton.bones[lower_body].rotation.z = THREE.MathUtils.degToRad(actrotvalueZ);
 				mesh.skeleton.bones[upper_body].rotation.z = THREE.MathUtils.degToRad(actrotvalueZ);
 				effect.render( scene, camera );
-				if (saveRequested) {
-        		saveRequested = false;
-				}
+			
 				
 
 			}}
 	
-
+			function saveAstxt() {
+			var link = document.createElement("a");
+         	var content = array[0]+','+array[1];
+        	var file = new Blob([content], { type: 'text/plain' });
+         	link.href = URL.createObjectURL(file);
+         	link.download = "sample.txt";
+        	link.click();
+         	URL.revokeObjectURL(link.href);
+			}
+	
 
 		</script>
 
