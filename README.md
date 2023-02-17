@@ -1,6 +1,6 @@
 # Dataset-Generate
 ## 使用鍵盤wasd控制角色旋轉
-W:Zrotation增加 A:Yrotation減少 S:Zrotation減少 D:Yrotation增加
+W:Zrotation增加 A:Yrotation減少 S:Zrotation減少 D:Yrotation增加 R:從-1到1之間產生隨機的Y軸與Z軸旋轉值
 ## 儲存
 按下E鍵儲存畫面截圖
 按下Q鍵儲存當前vector
