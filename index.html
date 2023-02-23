@@ -39,6 +39,11 @@
 			let upper_body=0,lower_body=0;
 			let rotyV=0,rotzV=0;
 			let meshflag=0;
+			var startflag0=true;
+			var startflag1=true;
+			var startflagn1=true;
+			var startflagR=true;
+			var datacount=5;
 			var array = [0,0];
 			var strDownloadMime = "image/octet-stream";
 			
@@ -93,13 +98,15 @@
 				
 			}
 			if (e.keyCode == 82) {//r
-				//ramdon rotation value
-				rotyV=Math.random()*(1-(-1))+(-1);
+				//reset
+				rotyV=0;
+				rotzV=0;
+				/*rotyV=Math.random()*(1-(-1))+(-1);
 				rotzV=Math.random()*(1-(-1))+(-1);
 				array[0]=rotyV.toFixed(1);
 				array[1]=rotzV.toFixed(1);
 				console.log(array[0]);
-				console.log(array[1]);
+				console.log(array[1]);*/
 			}
 
 			if (e.keyCode == 81) {//Q
@@ -115,8 +122,23 @@
 		
         if (e.keyCode == 84) {//T
 			//自動儲存圖像與txt
-			//roty 0 to 1
-			autoshot();
+			
+			DataGenerate0();
+		}
+		if (e.keyCode == 89) {//Y
+			//自動儲存圖像與txt
+			
+			DataGenerate1();
+		}
+		if (e.keyCode == 85) {//u
+			//自動儲存圖像與txt
+			
+			DataGeneraten1();
+		}
+		if (e.keyCode == 71) {//G
+			//自動儲存圖像與txt
+
+			DataGenerateRandom();
 		}
 
 			}
@@ -170,6 +192,109 @@
 				mygui.add(mesh.skeleton.bones[reye_index].rotation,'y',0,Math.PI).name('rotate Y axis')
 			
 			}*/
+			function DataGenerate0(){
+				//var i,j;
+				if(startflag0==true){
+					rotyV=0;
+					rotzV=-1;
+					startflag0=false;
+
+				}
+					if(rotzV<=1){
+					setTimeout(function()
+   					{
+						//console.log(startflag);
+						console.log(rotzV);
+						array[0]=rotyV.toFixed(1);
+						array[1]=rotzV.toFixed(1);
+						//console.log(array[0]);
+						//console.log(array[1]);
+						
+						saveImage();
+						saveAstxt();
+						rotzV=rotzV+1;
+						
+						DataGenerate0();
+					},1000);
+					}
+				
+			}
+			function DataGenerate1(){
+				//var i,j;
+				if(startflag1==true){
+					rotyV=1;
+					rotzV=-1;
+					startflag1=false;
+
+				}
+					if(rotzV<=1){
+					setTimeout(function()
+   					{
+						//console.log(startflag);
+						console.log(rotzV);
+						array[0]=rotyV.toFixed(1);
+						array[1]=rotzV.toFixed(1);
+						//console.log(array[0]);
+						//console.log(array[1]);
+						
+						saveImage();
+						saveAstxt();
+						rotzV=rotzV+1;
+						
+						DataGenerate1();
+					},1000);
+					}
+				
+			}
+			function DataGeneraten1(){
+				//var i,j;
+				if(startflagn1==true){
+					rotyV=-1;
+					rotzV=-1;
+					startflagn1=false;
+
+				}
+					if(rotzV<=1){
+					setTimeout(function()
+   					{
+						//console.log(startflag);
+						console.log(rotzV);
+						array[0]=rotyV.toFixed(1);
+						array[1]=rotzV.toFixed(1);
+						//console.log(array[0]);
+						//console.log(array[1]);
+						
+						saveImage();
+						saveAstxt();
+						rotzV=rotzV+1;
+						
+						DataGeneraten1();
+					},1000);
+					}
+				
+			}
+			function DataGenerateRandom(){
+				//var i,j;
+			
+
+					if(datacount>0){
+						rotyV=Math.random()*(1-(-1))+(-1);
+						rotzV=Math.random()*(1-(-1))+(-1);
+						array[0]=rotyV.toFixed(1);
+						array[1]=rotzV.toFixed(1);
+					setTimeout(function()
+   					{
+						
+						console.log(array[0]);
+						console.log(array[1]);
+						saveImage();
+						saveAstxt();
+						datacount--;
+						DataGenerateRandom();
+					},500);
+					}
+				
+			}
 			
 			function init() {
 				
