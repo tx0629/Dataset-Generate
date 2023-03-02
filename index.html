@@ -43,7 +43,7 @@
 			var startflag1=true;
 			var startflagn1=true;
 			var startflagR=true;
-			var datacount=5;
+			var datacount=55;//隨機生成數量
 			var array = [0,0];
 			var strDownloadMime = "image/octet-stream";
 			
@@ -280,8 +280,27 @@
 					if(datacount>0){
 						rotyV=Math.random()*(1-(-1))+(-1);
 						rotzV=Math.random()*(1-(-1))+(-1);
+						//避免出現-0.0
+						if(rotyV==-0.0){
+							//array[0]=Math.abs(rotyV);
+							array[0]=-(rotyV);
+							array[1]=rotzV.toFixed(1);
+						}
+						if(rotyV==-0.0){
+							array[0]=rotyV.toFixed(1);
+							array[1]=-(rotzV);
+					
+						}
+						if(rotyV==-0.0&&rotzV==-0.0){
+							array[0]=-(rotyV);
+							array[1]=-(rotzV);
+					
+						}
+						else{
 						array[0]=rotyV.toFixed(1);
 						array[1]=rotzV.toFixed(1);
+						}
+						
 					setTimeout(function()
    					{
 						
