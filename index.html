@@ -38,12 +38,13 @@
 			let y,z;
 			let upper_body=0,lower_body=0;
 			let rotyV=0,rotzV=0;
+			var tempY,tempZ;
 			let meshflag=0;
 			var startflag0=true;
 			var startflag1=true;
 			var startflagn1=true;
 			var startflagR=true;
-			var datacount=55;//隨機生成數量
+			var datacount=56;//隨機生成數量
 			var array = [0,0];
 			var strDownloadMime = "image/octet-stream";
 			
@@ -275,37 +276,54 @@
 			}
 			function DataGenerateRandom(){
 				//var i,j;
-			
+				//datacount=1;
+
 
 					if(datacount>0){
-						rotyV=Math.random()*(1-(-1))+(-1);
-						rotzV=Math.random()*(1-(-1))+(-1);
+						tempY=Math.random()*(1-(-1))+(-1);
+						rotyV=tempY.toFixed(1);
+						tempZ=(Math.random()*(1-(-1))+(-1));
+						rotzV=tempZ.toFixed(1);
 						//避免出現-0.0
-						if(rotyV==-0.0){
+						if(Object.is(rotyV, -0.0)){
 							//array[0]=Math.abs(rotyV);
 							array[0]=-(rotyV);
-							array[1]=rotzV.toFixed(1);
+							array[1]=rotzV;
 						}
-						if(rotyV==-0.0){
-							array[0]=rotyV.toFixed(1);
+						if(Object.is(rotzV, -0.0)){
+							array[0]=rotyV;
 							array[1]=-(rotzV);
 					
 						}
-						if(rotyV==-0.0&&rotzV==-0.0){
+						if(Object.is(rotyV, -0.0)&&Object.is(rotzV, -0.0)){
 							array[0]=-(rotyV);
 							array[1]=-(rotzV);
 					
 						}
 						else{
-						array[0]=rotyV.toFixed(1);
-						array[1]=rotzV.toFixed(1);
+						array[0]=rotyV;
+						array[1]=rotzV;
 						}
 						
 					setTimeout(function()
-   					{
+   					{	
+						/*測試用
+						if(Object.is(array[0], 0.0)){
+							array[0]=-(array[0]);
+							console.log(rotyV);
+							console.log(rotzV);
+							console.log("conut=",56-datacount);
+							console.log("#############");
 						
-						console.log(array[0]);
-						console.log(array[1]);
+						}
+						if((Object.is(array[1], 0.0))){
+							array[1]=-(array[1]);
+							console.log(rotyV);
+							console.log(rotzV);
+							console.log("conut=",56-datacount);
+							console.log("#############");
+						}*/
+						
 						saveImage();
 						saveAstxt();
 						datacount--;
