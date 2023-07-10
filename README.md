@@ -1,6 +1,8 @@
 # Dataset-Generate
-## 使用鍵盤wasd控制角色旋轉
-W:Zrotation增加 A:Yrotation減少 S:Zrotation減少 D:Yrotation增加 R:旋轉值歸零
+## 使用鍵盤wasd控制角色旋轉，滑鼠控制縮放和位置
+W:Zrotation增加 A:Yrotation減少 S:Zrotation減少 D:Yrotation增加 R:旋轉值歸零  
+滑鼠滾輪控制縮放，滑鼠右鍵按住拉動移動模型
+
 ## 儲存
 按下E鍵儲存畫面截圖，按下Q鍵儲存當前vector
 ## 自動生成
